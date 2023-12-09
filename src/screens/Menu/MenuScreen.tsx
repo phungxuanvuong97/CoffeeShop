@@ -1,3 +1,4 @@
+import LatteIcon from "@/components/icons/LatteIcon";
 import { SIZES, icons } from "@/constants";
 import { HomeStackParamList } from "@/types/NavigationTypes";
 import { useNavigation } from "@react-navigation/native";
@@ -13,31 +14,19 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 function MenuItem(item: any, index: any, navigation: any) {
+  const itemLocal = item;
   return (
     <TouchableOpacity
       onPress={() => {
         navigation.navigate("ProductDetail", {
-          id: item.id,
-          name: item.name,
-          icon: item.icon,
+          id: index,
+          title: item.name,
         });
       }}
     >
       <View style={styles.menuItem}>
-        <Image
-          source={icons.espresso_icon}
-          resizeMode="contain"
-          style={{
-            width: 30,
-            height: 30,
-            flexGrow: 1,
-          }}
-        />
-        <View
-          style={{
-            flexGrow: 4,
-          }}
-        >
+        <LatteIcon width={32} height={32} style={styles.menuItemIcon}></LatteIcon>
+        <View style={styles.menuItemTextContainer}>
           <Text style={styles.menuItemText}>{item.name}</Text>
         </View>
         <Image
@@ -52,6 +41,14 @@ function MenuItem(item: any, index: any, navigation: any) {
       </View>
     </TouchableOpacity>
   );
+}
+
+function getIconComponent(icon: any){
+  switch(icon){
+    case 'latte':{
+      return <LatteIcon width={32} height={32} style={styles.menuItemIcon}></LatteIcon>
+    }
+  }
 }
 
 function RenderMenuList() {
@@ -82,7 +79,7 @@ function RenderMenuList() {
   );
 }
 
-function Menu() {
+function MenuScreen() {
   return (
     <View style={styles.screenContainer}>
       <Text style={styles.mainText}>
@@ -110,19 +107,30 @@ const styles = StyleSheet.create({
     height:'100%'
   },
   mainText: {
-    paddingLeft: 15,
+    paddingLeft: 12,
   },
 
   menuItem: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: 'space-between',
     margin: 15,
-    gap: gap,
   },
 
-  menuItemTextContainer: {},
+  menuItemIcon:{
+    flexGrow:1
+  },
+
+  menuItemTextContainer: {
+    flexGrow:8,
+    alignItems:'flex-start',
+    marginLeft:SIZES.width / 8
+  },
+
+  menuItemLeftIcon:{
+    flexGrow:1
+  },
 
   menuItemText: {
     color: "#000",
@@ -138,4 +146,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Menu;
+export default MenuScreen;

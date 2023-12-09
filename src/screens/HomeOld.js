@@ -22,7 +22,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import { ClothesContext } from '../context';
 
-const Home = () => {
+const HomeOld = () => {
 
     const navigation = useNavigation()
     const appContext = useContext(ClothesContext)
@@ -52,6 +52,9 @@ const Home = () => {
                     setShowAddToBagModal(true);
                 }}
             >
+                pdwa
+                l.,jmbgfvcxz       radius
+                gf
                 <Text style={{ color: COLORS.gray, ...FONTS.h5 }}>{item.type}</Text>
 
                 <View style={[{
@@ -334,4 +337,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Home;
+export default HomeOld;

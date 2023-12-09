@@ -1,3 +1,4 @@
+import CoffeeImageIcon from "@/components/icons/CoffeImageIcon";
 import { SIZES, icons, images } from "@/constants";
 import { View, Image, StyleSheet, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -9,7 +10,8 @@ function HelloSceen({ navigation }: any) {
   return (
     <View style={styles.screenContainer}>
       <View style={styles.mainImage}>
-        <Image source={images.coffeCar} />
+        {/* <Image source={images.coffeCar} /> */}
+        <CoffeeImageIcon width={204} height={322}></CoffeeImageIcon>
       </View>
       <View style={styles.mainTextContainer}>
         <Text style={styles.mainText}>Get the best coffee</Text>

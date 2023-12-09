@@ -8,10 +8,13 @@ import { COLORS, FONTS, icons, SIZES } from '../constants';
 import HelloSceen from '@/screens/Hello/HelloScreen';
 import SplashScreen from '@/screens/Splash/SplashScreen';
 import { MenuStackParamList } from '@/types/NavigationTypes';
-import Menu from '@/screens/Menu/Menu';
+import Menu from '@/screens/Menu/MenuScreen';
 import { Image, TouchableOpacity } from 'react-native';
 import MenuIcon from '@/components/icons/MenuIcon';
-import ProductDetail from '@/screens/ProductDetail/ProductDetail';
+import ProductDetail from '@/screens/ProductDetail/ProductDetailScreen';
+import { HomeOld } from '@/screens';
+import ProductDetailScreen from '@/screens/ProductDetail/ProductDetailScreen';
+import CartIcon from '@/components/icons/CartIcon';
 
 const Stack = createStackNavigator()
 
@@ -19,14 +22,14 @@ export default function ProductDetailNavigator() {
     const navigation = useNavigation<StackNavigationProp<MenuStackParamList>>();
     return (
         <Stack.Navigator 
-        initialRouteName="ProductDetail"
+        initialRouteName="ProductDetailScreen"
         screenOptions={{
             headerShown: true
           }}
         >
             <Stack.Screen
-                name="MeProductDetailnu"
-                component={ProductDetail}
+                name="ProductDetailScreen"
+                component={ProductDetailScreen}
                 options={{
                     title: ' ',
                     headerStyle: {
@@ -45,18 +48,12 @@ export default function ProductDetailNavigator() {
                     ),
                     headerRight: () => (
                         <TouchableOpacity
-                            style={{ marginRight: SIZES.padding }}
-                            onPress={() => console.log('Pressed')}>
-                            <Image
-                                source={icons.search}
-                                resizeMode="contain"
-                                style={{
-                                    width: 30,
-                                    height: 30,
-                                }}
-                            />
+                          style={{ marginRight: SIZES.padding }}
+                          onPress={() => console.log("Pressed")}
+                        >
+                          <CartIcon width={25} height={25}></CartIcon>
                         </TouchableOpacity>
-                    ),
+                      ),
                 }}
             />
 

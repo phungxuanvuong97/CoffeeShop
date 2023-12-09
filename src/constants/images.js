@@ -10,6 +10,9 @@ export const recentlyViewedLabel = require('../../assets/images/recently-viewed-
 
 export const coffeCar = require('../../assets/images/coffer_car.png');
 export const coffeCup = require('../../assets/images/CoffeCup.png');
+export const backgroundImage = require('../../assets/images/background_image.png');
+export const productBackground = require('../../assets/images/product_background.png');
+export const cabuchinoImage = require('../../assets/images/cabuchino.png');
 
 export default {
   nikeMetcon3,
@@ -22,5 +25,8 @@ export default {
   nikeZoomKobe1Proto,
   recentlyViewedLabel,
   coffeCar,
-  coffeCup
+  coffeCup,
+  backgroundImage,
+  productBackground,
+  cabuchinoImage
 };

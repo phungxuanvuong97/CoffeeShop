@@ -7,7 +7,7 @@ import { AppDrawerParamList } from "../types/NavigationTypes";
 import HomeNavigator from "./HomeNavigator";
 import StartupNavigator from "./StartupNavigator";
 import MenuNavigator from "./MenuNavigator";
-import ProductDetail from "@/screens/ProductDetail/ProductDetail";
+import ProductDetail from "@/screens/ProductDetail/ProductDetailScreen";
 import ProductDetailNavigator from "./ProductDetailsNavigator";
 
 const theme = {
@@ -27,6 +27,7 @@ export default function AppNavigator() {
         screenOptions={{
           headerShown: false,
           headerTransparent: true,
+          
         }}
         drawerContentOptions={{
           activeTintColor: "#e91e63",
@@ -34,24 +35,9 @@ export default function AppNavigator() {
         }}
       >
         <Drawer.Screen
-          name="Startup"
-          options={{ drawerLabel: "Startup" }}
-          component={StartupNavigator}
-        />
-        <Drawer.Screen
-          name="Home"
-          options={{ drawerLabel: "Home" }}
+          name="HomeNavigator"
+          options={{ drawerLabel: "HomeNavigator" }}
           component={HomeNavigator}
-        />
-        <Drawer.Screen
-          name="Menu"
-          options={{ drawerLabel: "Menu" }}
-          component={MenuNavigator}
-        />
-        <Drawer.Screen
-          name="ProductDetail"
-          options={{ drawerLabel: "ProductDetail" }}
-          component={ProductDetailNavigator}
         />
       </Drawer.Navigator>
     </NavigationContainer>

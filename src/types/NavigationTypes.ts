@@ -8,8 +8,11 @@ export type MenuStackParamList = {
     Menu: undefined,
     Home: undefined,
     Locate: undefined,
-    Profile: undefined
+    Profile: undefined,
+    ProductDetailScreen: undefined
 }
+
+
 
 
 export type AddressStackParamList = {

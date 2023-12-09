@@ -2,6 +2,10 @@ import { DarkTheme } from '@react-navigation/native';
 
 import type { ThemeConfiguration } from '@/types/theme/config';
 
+const colorsCoffee = {
+	backgroundColor:"#FAF4EE"
+}
+
 const colorsLight = {
 	red500: '#C13333',
 	gray800: '#303030',
