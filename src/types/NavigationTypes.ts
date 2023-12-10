@@ -29,11 +29,11 @@ export type AppDrawerParamList = {
 }
 
 export type HomeBottmTabParamList = {
-    Account: undefined;
-    Brand: undefined;
-    Category: undefined;
+    Reward: undefined;
+    Scan: undefined;
+    Profile: undefined;
     Home: undefined;
-    MyBag: undefined;
+    Order: undefined;
 }
 
 export type HomeStackParamList = {
@@ -41,7 +41,9 @@ export type HomeStackParamList = {
     Category: undefined;
     Home: undefined;
     ProductDetail: undefined;
-    Splashscreen: undefined;
+    SplashScreen: undefined;
+    MenuScreen: undefined;
+    
 }
 
 export type LoginStackParamList = {

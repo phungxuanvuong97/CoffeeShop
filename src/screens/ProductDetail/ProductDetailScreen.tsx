@@ -1,7 +1,12 @@
+import CartComponent from "@/components/common/CartComponent";
 import CartIcon from "@/components/icons/CartIcon";
 import LargeCupIcon from "@/components/icons/LargeCupIcon";
 import LargeSugarCupIcon from "@/components/icons/LargeSugarCupIcon";
 import { SIZES, icons, images } from "@/constants";
+import { useAppData, useAppDataDispatch } from "@/context/AppDataContext";
+import { AddProductToCart } from "@/reduxs/actions/CartActions";
+import { ProductModel } from "@/types/products/ProductItem";
+import { Badge, BadgeText } from "@gluestack-ui/themed";
 import React, { useState } from "react";
 
 import {
@@ -52,9 +57,13 @@ function ProductImageList() {
 
 function ProductDetailScreen({ navigation, route }: any) {
   const { id, title } = route.params;
-  const [quanlity, setQuanlity] = useState(0);
+  const [quanlity, setQuanlity] = useState(1);
   const [sugar, setSugar] = useState(1);
   const [size, setSize] = useState(1);
+
+
+  const appDataDispatcher = useAppDataDispatch();
+  const appData = useAppData();
 
   function addQuanlity() {
     setQuanlity(quanlity + 1);
@@ -97,6 +106,21 @@ function ProductDetailScreen({ navigation, route }: any) {
         return "Small";
       }
     }
+  }
+
+  function onPressAddProductToCart(){
+    const product : ProductModel = {
+      id: id,
+      name: title,
+      size: size,
+      sugar: sugar
+    };
+
+    appDataDispatcher(AddProductToCart({
+      id: 1,
+      product: product, 
+      quanlity: 1
+    }))
   }
 
   function renderSizeSelection(quanlity: any) {
@@ -235,12 +259,7 @@ function ProductDetailScreen({ navigation, route }: any) {
               {title}
             </Text>
           </View>
-          <TouchableOpacity
-            style={{ marginRight: SIZES.padding }}
-            onPress={() => console.log("Pressed")}
-          >
-            <CartIcon width={28} height={28}></CartIcon>
-          </TouchableOpacity>
+          <CartComponent content={appData?.carts.length}></CartComponent>
         </View>
       </View>
       <ScrollView style={styles.productDetails}>
@@ -291,7 +310,7 @@ function ProductDetailScreen({ navigation, route }: any) {
           <Text style={styles.productIngradientText}>Sugar</Text>
           {renderSugarSelection(sugar)}
         </View>
-        <TouchableOpacity style={styles.addToCartButtonContainer}>
+        <TouchableOpacity style={styles.addToCartButtonContainer} onPress={()=>{onPressAddProductToCart()}}>
           <Text style={styles.addToCartButtonText}>Add to card</Text>
         </TouchableOpacity>
       </ScrollView>

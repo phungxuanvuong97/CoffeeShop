@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, TouchableOpacity } from "react-native";
+import { Image, Text, TouchableOpacity } from "react-native";
 import {
   createStackNavigator,
   StackNavigationProp,
@@ -31,6 +31,10 @@ import ProfileScreen from "@/screens/Profile/ProfileScreen";
 import MenuScreen from "@/screens/Menu/MenuScreen";
 import SplashScreen from "../screens/Splash/SplashScreen";
 import ProductDetailScreen from "@/screens/ProductDetail/ProductDetailScreen";
+import { Badge, BadgeText } from "@gluestack-ui/themed";
+import { useAppData, useAppDataDispatch } from "@/context/AppDataContext";
+import CartComponent from "@/components/common/CartComponent";
+import MenuComponent from "@/components/common/MenuComponent";
 
 const Stack = createStackNavigator<HomeStackParamList>();
 const Tab = createBottomTabNavigator<HomeBottmTabParamList>();
@@ -45,7 +49,6 @@ function HomeTabs() {
         inactiveTintColor: "#D9D9D9",
         activeTintColor: "#B98875",
         //tabBarActiveBackgroundColor: "#B98875",
-        
       }}
       screenOptions={{
         tabBarStyle: [
@@ -57,7 +60,7 @@ function HomeTabs() {
             padding: tabBarHeight / 8,
           },
         ],
-        tabBarActiveTintColor:'#B98875',
+        tabBarActiveTintColor: "#B98875",
       }}
     >
       <Tab.Screen
@@ -65,7 +68,7 @@ function HomeTabs() {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <HomeIcon width={size} height={size} color={color}/>
+            <HomeIcon width={size} height={size} color={color} />
           ),
           headerShown: false,
         }}
@@ -95,14 +98,18 @@ function HomeTabs() {
         component={OrderScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <CoffeeCupIcon width={size} height={size} color={color}></CoffeeCupIcon>
+            <CoffeeCupIcon
+              width={size}
+              height={size}
+              color={color}
+            ></CoffeeCupIcon>
           ),
           headerShown: false,
-          tabBarBadge:'1',
-          tabBarBadgeStyle:{
-            backgroundColor:'#B98875',
-            color:'white'
-          }
+          tabBarBadge: "1",
+          tabBarBadgeStyle: {
+            backgroundColor: "#B98875",
+            color: "white",
+          },
         }}
       />
       <Tab.Screen
@@ -115,13 +122,16 @@ function HomeTabs() {
           headerShown: false,
         }}
       />
-     
     </Tab.Navigator>
   );
 }
 
 export default function HomeNavigator() {
   const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
+
+  const appDataDispatcher = useAppDataDispatch();
+  const appData = useAppData();
+
   return (
     <Stack.Navigator initialRouteName="SplashScreen">
       <Stack.Screen
@@ -137,20 +147,10 @@ export default function HomeNavigator() {
             ...FONTS.navTitle,
           },
           headerLeft: ({ onPress }) => (
-            <TouchableOpacity
-              style={{ marginLeft: SIZES.padding }}
-              onPress={() => navigation.navigate("MenuScreen")}
-            >
-              <MenuIcon width={28} height={28}></MenuIcon>
-            </TouchableOpacity>
+            <MenuComponent navigation={navigation} navigateBack={"MenuScreen"}></MenuComponent>
           ),
           headerRight: () => (
-            <TouchableOpacity
-              style={{ marginRight: SIZES.padding }}
-              onPress={() => console.log("Pressed")}
-            >
-              <CartIcon width={28} height={28}></CartIcon>
-            </TouchableOpacity>
+            <CartComponent content={appData?.carts.length}></CartComponent>
           ),
         }}
       />
@@ -181,20 +181,18 @@ export default function HomeNavigator() {
             ...FONTS.navTitle,
           },
           headerLeft: ({ onPress }) => (
-            <TouchableOpacity
-              style={{ marginLeft: SIZES.padding }}
-              onPress={() => navigation.navigate("Home")}
-            >
-              <MenuIcon width={25} height={25}></MenuIcon>
-            </TouchableOpacity>
+            <MenuComponent navigation={navigation} navigateBack={"Home"} icon={()=><Image
+              source={icons.left_icon}
+              resizeMode="contain"
+              style={{
+                width: 24,
+                height: 24,
+                flexGrow: 1,
+              }}
+            />}></MenuComponent>
           ),
           headerRight: () => (
-            <TouchableOpacity
-              style={{ marginRight: SIZES.padding }}
-              onPress={() => console.log("Pressed")}
-            >
-              <CartIcon width={25} height={25}></CartIcon>
-            </TouchableOpacity>
+            <CartComponent content={appData?.carts.length}></CartComponent>
           ),
         }}
       />
