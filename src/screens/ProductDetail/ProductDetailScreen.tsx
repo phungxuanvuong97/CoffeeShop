@@ -5,6 +5,8 @@ import LargeSugarCupIcon from "@/components/icons/LargeSugarCupIcon";
 import { SIZES, icons, images } from "@/constants";
 import { useAppData, useAppDataDispatch } from "@/context/AppDataContext";
 import { AddProductToCart } from "@/reduxs/actions/CartActions";
+import { addCart } from "@/reduxs/reducers/CartsReducer";
+import { RootState } from "@/reduxs/stores/Store";
 import { AddNewProduct, CartService } from "@/services/carts/cartService";
 import { CartModel } from "@/types/carts/Cart";
 import { ProductModel } from "@/types/products/ProductItem";
@@ -22,6 +24,7 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SceneMap, TabView } from "react-native-tab-view";
+import { useDispatch, useSelector } from "react-redux";
 
 const FirstRoute = () => (
   <View style={{ flex: 1, backgroundColor: "#ff4081" }}>
@@ -63,8 +66,8 @@ function ProductDetailScreen({ navigation, route }: any) {
   const [sugar, setSugar] = useState(1);
   const [size, setSize] = useState(1);
 
-  const appDataDispatcher = useAppDataDispatch();
-  const appData = useAppData();
+  const dispatch = useDispatch();
+  const {carts}  = useSelector((state: RootState) => state.carts);
 
   function addQuanlity() {
     setQuanlity(quanlity + 1);
@@ -120,7 +123,7 @@ function ProductDetailScreen({ navigation, route }: any) {
       },
       quanlity: quanlity,
     };
-    AddNewProduct(appDataDispatcher, responseModel);
+    dispatch(addCart(responseModel))
   }
 
   function renderSizeSelection(quanlity: any) {
@@ -259,7 +262,7 @@ function ProductDetailScreen({ navigation, route }: any) {
               {title}
             </Text>
           </View>
-          <CartComponent content={appData?.carts.length}></CartComponent>
+          <CartComponent content={carts.length}></CartComponent>
         </View>
       </View>
       <ScrollView style={styles.productDetails}>

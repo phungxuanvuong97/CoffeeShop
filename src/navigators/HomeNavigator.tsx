@@ -35,6 +35,9 @@ import { Badge, BadgeText } from "@gluestack-ui/themed";
 import { useAppData, useAppDataDispatch } from "@/context/AppDataContext";
 import CartComponent from "@/components/common/CartComponent";
 import MenuComponent from "@/components/common/MenuComponent";
+import LoadingSplashScreen from "@/screens/Splash/LoadingSplashScreen";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/reduxs/stores/Store";
 
 const Stack = createStackNavigator<HomeStackParamList>();
 const Tab = createBottomTabNavigator<HomeBottmTabParamList>();
@@ -129,8 +132,8 @@ function HomeTabs() {
 export default function HomeNavigator() {
   const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
 
-  const appDataDispatcher = useAppDataDispatch();
-  const appData = useAppData();
+  const dispatch = useDispatch();
+  const {carts}  = useSelector((state: RootState) => state.carts);
 
   return (
     <Stack.Navigator initialRouteName="SplashScreen">
@@ -150,13 +153,20 @@ export default function HomeNavigator() {
             <MenuComponent navigation={navigation} navigateBack={"MenuScreen"}></MenuComponent>
           ),
           headerRight: () => (
-            <CartComponent content={appData?.carts.length}></CartComponent>
+            <CartComponent content={carts.length}></CartComponent>
           ),
         }}
       />
       <Stack.Screen
         name="SplashScreen"
         component={SplashScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="LoadingSplashScreen"
+        component={LoadingSplashScreen}
         options={{
           headerShown: false,
         }}
@@ -192,7 +202,7 @@ export default function HomeNavigator() {
             />}></MenuComponent>
           ),
           headerRight: () => (
-            <CartComponent content={appData?.carts.length}></CartComponent>
+            <CartComponent content={carts.length}></CartComponent>
           ),
         }}
       />

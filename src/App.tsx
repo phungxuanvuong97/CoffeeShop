@@ -10,10 +10,10 @@ import { LogBox } from "react-native";
 import { GluestackUIProvider, Text, createConfig } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import { AppDataProvider } from "./context/AppDataContext";
+import { Provider } from "react-redux";
+import { store } from "./reduxs/stores/Store";
 
 const queryClient = new QueryClient();
-
-
 
 export const storage = new MMKV();
 
@@ -21,17 +21,17 @@ function App() {
   LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
   LogBox.ignoreAllLogs(); //Ignore all log notifications
   return (
-	<GluestackUIProvider config={config}>
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider storage={storage}>
-          <ClothesProvider>
+    <GluestackUIProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider storage={storage}>
+          <Provider store={store}>
             <AppDataProvider>
-            <AppNavigator />
+              <AppNavigator />
             </AppDataProvider>
-          </ClothesProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
-	</GluestackUIProvider>
+          </Provider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </GluestackUIProvider>
   );
 }
 

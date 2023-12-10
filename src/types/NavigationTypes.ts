@@ -42,6 +42,7 @@ export type HomeStackParamList = {
     Home: undefined;
     ProductDetail: undefined;
     SplashScreen: undefined;
+    LoadingSplashScreen: undefined;
     MenuScreen: undefined;
     
 }
