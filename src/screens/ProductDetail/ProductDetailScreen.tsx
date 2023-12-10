@@ -5,6 +5,8 @@ import LargeSugarCupIcon from "@/components/icons/LargeSugarCupIcon";
 import { SIZES, icons, images } from "@/constants";
 import { useAppData, useAppDataDispatch } from "@/context/AppDataContext";
 import { AddProductToCart } from "@/reduxs/actions/CartActions";
+import { AddNewProduct, CartService } from "@/services/carts/cartService";
+import { CartModel } from "@/types/carts/Cart";
 import { ProductModel } from "@/types/products/ProductItem";
 import { Badge, BadgeText } from "@gluestack-ui/themed";
 import React, { useState } from "react";
@@ -61,7 +63,6 @@ function ProductDetailScreen({ navigation, route }: any) {
   const [sugar, setSugar] = useState(1);
   const [size, setSize] = useState(1);
 
-
   const appDataDispatcher = useAppDataDispatch();
   const appData = useAppData();
 
@@ -108,19 +109,18 @@ function ProductDetailScreen({ navigation, route }: any) {
     }
   }
 
-  function onPressAddProductToCart(){
-    const product : ProductModel = {
-      id: id,
-      name: title,
-      size: size,
-      sugar: sugar
-    };
-
-    appDataDispatcher(AddProductToCart({
+  function onPressAddProductToCart() {
+    const responseModel: CartModel = {
       id: 1,
-      product: product, 
-      quanlity: 1
-    }))
+      product: {
+        id: 1,
+        name: title,
+        size: 1,
+        sugar: 1,
+      },
+      quanlity: quanlity,
+    };
+    AddNewProduct(appDataDispatcher, responseModel);
   }
 
   function renderSizeSelection(quanlity: any) {
@@ -310,7 +310,12 @@ function ProductDetailScreen({ navigation, route }: any) {
           <Text style={styles.productIngradientText}>Sugar</Text>
           {renderSugarSelection(sugar)}
         </View>
-        <TouchableOpacity style={styles.addToCartButtonContainer} onPress={()=>{onPressAddProductToCart()}}>
+        <TouchableOpacity
+          style={styles.addToCartButtonContainer}
+          onPress={() => {
+            onPressAddProductToCart();
+          }}
+        >
           <Text style={styles.addToCartButtonText}>Add to card</Text>
         </TouchableOpacity>
       </ScrollView>
