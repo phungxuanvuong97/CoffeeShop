@@ -11,7 +11,8 @@ import { GluestackUIProvider, Text, createConfig } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import { AppDataProvider } from "./context/AppDataContext";
 import { Provider } from "react-redux";
-import { store } from "./reduxs/stores/Store";
+import { persistor, store } from "./reduxs/stores/Store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const queryClient = new QueryClient();
 
@@ -25,9 +26,11 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider storage={storage}>
           <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
             <AppDataProvider>
               <AppNavigator />
             </AppDataProvider>
+           </PersistGate>
           </Provider>
         </ThemeProvider>
       </QueryClientProvider>
