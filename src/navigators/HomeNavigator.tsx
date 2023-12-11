@@ -38,6 +38,8 @@ import MenuComponent from "@/components/common/MenuComponent";
 import LoadingSplashScreen from "@/screens/Splash/LoadingSplashScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/reduxs/stores/Store";
+import CartScreen from "@/screens/Cart/CartScreen";
+import LeftArrowIcon from "@/components/icons/LeftArrowIcon";
 
 const Stack = createStackNavigator<HomeStackParamList>();
 const Tab = createBottomTabNavigator<HomeBottmTabParamList>();
@@ -153,7 +155,7 @@ export default function HomeNavigator() {
             <MenuComponent navigation={navigation} navigateBack={"MenuScreen"}></MenuComponent>
           ),
           headerRight: () => (
-            <CartComponent content={carts.length}></CartComponent>
+            <CartComponent content={carts.length} navigation={navigation}></CartComponent>
           ),
         }}
       />
@@ -191,18 +193,30 @@ export default function HomeNavigator() {
             ...FONTS.navTitle,
           },
           headerLeft: ({ onPress }) => (
-            <MenuComponent navigation={navigation} navigateBack={"Home"} icon={()=><Image
-              source={icons.left_icon}
-              resizeMode="contain"
-              style={{
-                width: 24,
-                height: 24,
-                flexGrow: 1,
-              }}
-            />}></MenuComponent>
+            <MenuComponent navigation={navigation} navigateBack={"Home"} icon={()=><LeftArrowIcon strokeWidth={2} width={32} height={30}></LeftArrowIcon>}></MenuComponent>
           ),
           headerRight: () => (
-            <CartComponent content={carts.length}></CartComponent>
+            <CartComponent content={carts.length} navigation={navigation}></CartComponent>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="CartScreen"
+        component={CartScreen}
+        options={{
+          title: " ",
+          headerStyle: {
+            backgroundColor: "#FAF4EE",
+          },
+          headerTintColor: COLORS.lightGray,
+          headerTitleStyle: {
+            ...FONTS.navTitle,
+          },
+          headerLeft: ({ onPress }) => (
+            <MenuComponent navigation={navigation} icon={()=><LeftArrowIcon strokeWidth={2} width={32} height={30}></LeftArrowIcon>}></MenuComponent>
+          ),
+          headerRight: () => (
+            <CartComponent content={carts.length} navigation={navigation}></CartComponent>
           ),
         }}
       />

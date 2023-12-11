@@ -44,7 +44,7 @@ export type HomeStackParamList = {
     SplashScreen: undefined;
     LoadingSplashScreen: undefined;
     MenuScreen: undefined;
-    
+    CartScreen: undefined;
 }
 
 export type LoginStackParamList = {

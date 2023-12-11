@@ -2,11 +2,11 @@ import { TouchableOpacity } from "react-native";
 import MenuIcon from "../icons/MenuIcon";
 import { SIZES } from "@/constants";
 
-function MenuComponent({ navigation, navigateBack = "Home", icon =  ()=><MenuIcon width={25} height={25}></MenuIcon>}: any) {
+function MenuComponent({ navigation, navigateBack, icon =  ()=><MenuIcon width={30} height={30}></MenuIcon>}: any) {
   return (
     <TouchableOpacity
       style={{ marginLeft: SIZES.padding }}
-      onPress={() => navigation.navigate(navigateBack)}
+      onPress={() => navigateBack != null ? navigation.navigate(navigateBack) : navigation.goBack()}
     >
       {icon()}
     </TouchableOpacity>

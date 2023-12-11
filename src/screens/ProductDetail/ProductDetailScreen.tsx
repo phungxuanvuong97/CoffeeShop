@@ -2,12 +2,13 @@ import CartComponent from "@/components/common/CartComponent";
 import CartIcon from "@/components/icons/CartIcon";
 import LargeCupIcon from "@/components/icons/LargeCupIcon";
 import LargeSugarCupIcon from "@/components/icons/LargeSugarCupIcon";
+import LeftArrowIcon from "@/components/icons/LeftArrowIcon";
 import { SIZES, icons, images } from "@/constants";
 import { useAppData, useAppDataDispatch } from "@/context/AppDataContext";
 import { AddProductToCart } from "@/reduxs/actions/CartActions";
 import { addCart } from "@/reduxs/reducers/CartsReducer";
 import { RootState } from "@/reduxs/stores/Store";
-import { AddNewProduct, CartService } from "@/services/carts/cartService";
+import { AddNewProduct } from "@/services/carts/cartService";
 import { CartModel } from "@/types/carts/Cart";
 import { ProductModel } from "@/types/products/ProductItem";
 import { Badge, BadgeText } from "@gluestack-ui/themed";
@@ -252,17 +253,14 @@ function ProductDetailScreen({ navigation, route }: any) {
             }}
             style={styles.productHeaderTitleIconBack}
           >
-            <Image
-              source={icons.left_icon}
-              style={{ width: 28, height: 28 }}
-            ></Image>
+            <LeftArrowIcon strokeWidth={2} width={32} height={30}></LeftArrowIcon>
           </TouchableOpacity>
           <View style={styles.productHeaderTitleTextContainer}>
             <Text style={styles.productHeaderTitleTextContainerText}>
               {title}
             </Text>
           </View>
-          <CartComponent content={carts.length}></CartComponent>
+          <CartComponent content={carts.length} navigation={navigation}></CartComponent>
         </View>
       </View>
       <ScrollView style={styles.productDetails}>
@@ -345,6 +343,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+
   },
   productHeaderTitleIconBack: {
     paddingLeft: SIZES.width / 30,
