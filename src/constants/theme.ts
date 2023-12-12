@@ -1,6 +1,14 @@
 import { Dimensions, TextStyle } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
+export function Width(i: number){
+  return (width * i) / 100;
+}
+
+export function Height(i: number){
+  return (width * i) / 100;
+}
+
 export const COLORS = {
   // colors
   black: '#1E1F20',
@@ -10,7 +18,9 @@ export const COLORS = {
   light1: '#f2f2f2',
   light2: '#8c8c8c',
   cat_title_color: '#212121',
+  mainColor: '#B98875'
 };
+
 
 export const SIZES: { [key: string]: number } = {
   // global sizes
@@ -35,6 +45,11 @@ export const SIZES: { [key: string]: number } = {
   // app dimensions
   width,
   height,
+
+  topBarHeight: height/7,
+  bottomBarHeight: height/8,
+
+  mainTextSize: (width * 7) / 100
 };
 
 export const FONTS: { [key: string]: TextStyle } = {

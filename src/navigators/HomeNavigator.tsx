@@ -40,12 +40,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/reduxs/stores/Store";
 import CartScreen from "@/screens/Cart/CartScreen";
 import LeftArrowIcon from "@/components/icons/LeftArrowIcon";
+import MenuSquareIcon from "@/components/icons/MenuSquareIcon";
 
 const Stack = createStackNavigator<HomeStackParamList>();
 const Tab = createBottomTabNavigator<HomeBottmTabParamList>();
 
 function HomeTabs() {
-  const tabBarHeight = SIZES.height / 8;
 
   return (
     <Tab.Navigator
@@ -59,10 +59,10 @@ function HomeTabs() {
         tabBarStyle: [
           {
             backgroundColor: "white",
-            height: tabBarHeight,
+            height: SIZES.bottomBarHeight,
             //borderTopLeftRadius: 30,
             //borderTopRightRadius: 30,
-            padding: tabBarHeight / 8,
+            padding: SIZES.bottomBarHeight / 8,
           },
         ],
         tabBarActiveTintColor: "#B98875",
@@ -134,7 +134,6 @@ function HomeTabs() {
 export default function HomeNavigator() {
   const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
 
-  const dispatch = useDispatch();
   const {carts}  = useSelector((state: RootState) => state.carts);
 
   return (
@@ -143,16 +142,17 @@ export default function HomeNavigator() {
         name="Home"
         component={HomeTabs}
         options={{
-          title: " ",
+          title: "",
           headerStyle: {
             backgroundColor: "#FAF4EE",
+            height: SIZES.topBarHeight
           },
           headerTintColor: COLORS.lightGray,
           headerTitleStyle: {
             ...FONTS.navTitle,
           },
           headerLeft: ({ onPress }) => (
-            <MenuComponent navigation={navigation} navigateBack={"MenuScreen"}></MenuComponent>
+            <MenuComponent navigation={navigation} navigateBack={"MenuScreen"} icon={()=><MenuSquareIcon width={28} height={28} color={COLORS.mainColor}></MenuSquareIcon>}></MenuComponent>
           ),
           headerRight: () => (
             <CartComponent content={carts.length} navigation={navigation}></CartComponent>
