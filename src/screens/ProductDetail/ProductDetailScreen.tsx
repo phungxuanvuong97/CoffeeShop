@@ -4,6 +4,7 @@ import LargeCupIcon from "@/components/icons/LargeCupIcon";
 import LargeSugarCupIcon from "@/components/icons/LargeSugarCupIcon";
 import LeftArrowIcon from "@/components/icons/LeftArrowIcon";
 import { SIZES, icons, images } from "@/constants";
+import { Height, Width } from "@/constants/theme";
 import { useAppData, useAppDataDispatch } from "@/context/AppDataContext";
 import { AddProductToCart } from "@/reduxs/actions/CartActions";
 import { addCart } from "@/reduxs/reducers/CartsReducer";
@@ -27,40 +28,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { SceneMap, TabView } from "react-native-tab-view";
 import { useDispatch, useSelector } from "react-redux";
 
-const FirstRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#ff4081" }}>
-    <Text>aasaaa</Text>
-  </View>
-);
-
-const SecondRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#ff4081" }}>
-    <Text>aasaaa</Text>
-  </View>
-);
-
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
-});
-
-function ProductImageList() {
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: "first", title: "First" },
-    { key: "second", title: "Second" },
-  ]);
-
-  return (
-    <TabView
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={{ width: SIZES.width, height: SIZES.height }}
-    />
-  );
-}
-
 function ProductDetailScreen({ navigation, route }: any) {
   const { id, title } = route.params;
   const [quanlity, setQuanlity] = useState(1);
@@ -68,7 +35,7 @@ function ProductDetailScreen({ navigation, route }: any) {
   const [size, setSize] = useState(1);
 
   const dispatch = useDispatch();
-  const {carts}  = useSelector((state: RootState) => state.carts);
+  const { carts } = useSelector((state: RootState) => state.carts);
 
   function addQuanlity() {
     setQuanlity(quanlity + 1);
@@ -124,7 +91,7 @@ function ProductDetailScreen({ navigation, route }: any) {
       },
       quanlity: quanlity,
     };
-    dispatch(addCart(responseModel))
+    dispatch(addCart(responseModel));
   }
 
   function renderSizeSelection(quanlity: any) {
@@ -156,7 +123,10 @@ function ProductDetailScreen({ navigation, route }: any) {
               setSize(i);
             }}
           >
-            <LargeCupIcon width={32} height={startingSize}></LargeCupIcon>
+            <LargeCupIcon
+              width={Width(15)}
+              height={startingSize}
+            ></LargeCupIcon>
             <Text style={styles.productSizeIconItemText}>{getSizeText(i)}</Text>
           </TouchableOpacity>
         );
@@ -168,7 +138,10 @@ function ProductDetailScreen({ navigation, route }: any) {
               setSize(i);
             }}
           >
-            <LargeCupIcon width={32} height={startingSize}></LargeCupIcon>
+            <LargeCupIcon
+              width={Width(15)}
+              height={startingSize}
+            ></LargeCupIcon>
             <Text style={styles.productSizeIconItemText}>{getSizeText(i)}</Text>
           </TouchableOpacity>
         );
@@ -210,7 +183,7 @@ function ProductDetailScreen({ navigation, route }: any) {
             }}
           >
             <LargeSugarCupIcon
-              width={32}
+              width={Width(15)}
               height={startingSize}
             ></LargeSugarCupIcon>
             <Text style={styles.productSizeIconItemText}>
@@ -227,7 +200,7 @@ function ProductDetailScreen({ navigation, route }: any) {
             }}
           >
             <LargeSugarCupIcon
-              width={32}
+              width={Width(15)}
               height={startingSize}
             ></LargeSugarCupIcon>
             <Text style={styles.productSizeIconItemText}>
@@ -253,14 +226,21 @@ function ProductDetailScreen({ navigation, route }: any) {
             }}
             style={styles.productHeaderTitleIconBack}
           >
-            <LeftArrowIcon strokeWidth={2} width={32} height={30}></LeftArrowIcon>
+            <LeftArrowIcon
+              strokeWidth={2}
+              width={Width(8)}
+              height={Width(8)}
+            ></LeftArrowIcon>
           </TouchableOpacity>
           <View style={styles.productHeaderTitleTextContainer}>
             <Text style={styles.productHeaderTitleTextContainerText}>
               {title}
             </Text>
           </View>
-          <CartComponent content={carts.length} navigation={navigation}></CartComponent>
+          <CartComponent
+            content={carts.length}
+            navigation={navigation}
+          ></CartComponent>
         </View>
       </View>
       <ScrollView style={styles.productDetails}>
@@ -324,8 +304,6 @@ function ProductDetailScreen({ navigation, route }: any) {
   );
 }
 
-const tabBarHeight = SIZES.height / 16;
-
 const styles = StyleSheet.create({
   screenContainer: {
     display: "flex",
@@ -333,7 +311,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FAF4EE",
     height: "100%",
     width: "100%",
-    paddingTop: tabBarHeight,
+    paddingTop: Height(14),
   },
   productHeader: {
     display: "flex",
@@ -343,10 +321,9 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-
   },
   productHeaderTitleIconBack: {
-    paddingLeft: SIZES.width / 30,
+    paddingLeft: Width(6),
     flexGrow: 1,
   },
   productHeaderTitleTextContainer: {
@@ -354,26 +331,23 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    right: SIZES.width / 30,
   },
   productHeaderTitleTextContainerText: {
     color: "#000",
-    fontSize: 22,
+    fontSize: Width(7),
     fontstyle: "normal",
     fontweight: "500",
     lineheight: 32,
     letterSpacing: -0.32,
   },
   productHeaderImageContainer: {
-    height: SIZES.height / 3,
-    width: "100%",
-    padding: 10,
+    height: Height(50),
+    //padding: 10,
   },
   productHeaderImageContainerImagebackground: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    margin: 10,
   },
   productHeaderImageContainerImage: {
     width: SIZES.width / 2,
@@ -397,7 +371,7 @@ const styles = StyleSheet.create({
   productTitleText: {
     color: "#000",
     fontFamily: "Inter",
-    fontSize: 22,
+    fontSize: Width(6),
     fontStyle: "normal",
     fontWeight: "500",
     lineHeight: 32,
@@ -434,7 +408,7 @@ const styles = StyleSheet.create({
   productQuanlityText: {
     color: "#000",
     fontFamily: "Inter",
-    fontSize: 22,
+    fontSize: Width(6),
     fontStyle: "normal",
     fontWeight: "500",
     lineHeight: 32,
@@ -446,7 +420,7 @@ const styles = StyleSheet.create({
 
   productQuanlityTextContainer: {
     fontFamily: "Inter",
-    fontSize: 22,
+    fontSize: Width(6),
     fontStyle: "normal",
     fontWeight: "500",
     lineHeight: 32,

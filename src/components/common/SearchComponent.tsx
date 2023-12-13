@@ -13,7 +13,7 @@ function SearchComponent() {
     <View style={styles.searchContainer}>
       <View style={styles.searchInputContainer}>
         <View style={styles.searchIcon}>
-          <SearchIcon width={Width(10)} height={Width(10)}></SearchIcon>
+          <SearchIcon width={Width(7)} height={Width(7)}></SearchIcon>
         </View>
 
         <TextInput
@@ -35,8 +35,9 @@ const styles = StyleSheet.create({
   searchContainer: {
     display: "flex",
     flexDirection: "row",
-    marginRight:Width(8),
-    marginTop:Height(5)
+    paddingTop: Height(6),
+    justifyContent:'space-between',
+    gap:Width(5)
   },
   searchInputContainer: {
     flexGrow: 9,
@@ -45,36 +46,36 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "rgba(0, 0, 0, 0.10)",
-    padding:10,
-    marginRight:10,
+    padding: 10,
     shadowColor: "rgba(0, 0, 0, 0.05)",
     shadowOffset: {
-        width: 0,
-        height: 2,
+      width: 0,
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
-elevation: 5,
+    justifyContent:'space-between',
+    elevation: 5,
   },
   searchIcon: {
     flexGrow: 1,
-    display:'flex',
-    flexDirection:'row'
+    display: "flex",
+    flexDirection: "row",
+    padding:Width(1)
   },
   searchPlaceholder: {
     flexGrow: 9,
   },
   searchFilter: {
     flexGrow: 1,
-    backgroundColor:'#967259',
-    borderTopLeftRadius:25,
-    borderTopRightRadius:25,
-    borderBottomRightRadius:30,
-    borderBottomLeftRadius:30,
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center'
+    backgroundColor: "#967259",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    borderBottomRightRadius: 30,
+    borderBottomLeftRadius: 30,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

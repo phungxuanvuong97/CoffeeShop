@@ -41,6 +41,7 @@ import { RootState } from "@/reduxs/stores/Store";
 import CartScreen from "@/screens/Cart/CartScreen";
 import LeftArrowIcon from "@/components/icons/LeftArrowIcon";
 import MenuSquareIcon from "@/components/icons/MenuSquareIcon";
+import { Height, Width } from "@/constants/theme";
 
 const Stack = createStackNavigator<HomeStackParamList>();
 const Tab = createBottomTabNavigator<HomeBottmTabParamList>();
@@ -59,10 +60,10 @@ function HomeTabs() {
         tabBarStyle: [
           {
             backgroundColor: "white",
-            height: SIZES.bottomBarHeight,
+            height: Height(24),
             //borderTopLeftRadius: 30,
             //borderTopRightRadius: 30,
-            padding: SIZES.bottomBarHeight / 8,
+            padding: Width(2),
           },
         ],
         tabBarActiveTintColor: "#B98875",
@@ -145,14 +146,14 @@ export default function HomeNavigator() {
           title: "",
           headerStyle: {
             backgroundColor: "#FAF4EE",
-            height: SIZES.topBarHeight
+            height: Height(28)
           },
           headerTintColor: COLORS.lightGray,
           headerTitleStyle: {
             ...FONTS.navTitle,
           },
           headerLeft: ({ onPress }) => (
-            <MenuComponent navigation={navigation} navigateBack={"MenuScreen"} icon={()=><MenuSquareIcon width={28} height={28} color={COLORS.mainColor}></MenuSquareIcon>}></MenuComponent>
+            <MenuComponent navigation={navigation} navigateBack={"MenuScreen"} icon={()=><MenuSquareIcon width={Width(8)} height={Width(8)} color={COLORS.mainColor}></MenuSquareIcon>}></MenuComponent>
           ),
           headerRight: () => (
             <CartComponent content={carts.length} navigation={navigation}></CartComponent>
@@ -193,7 +194,7 @@ export default function HomeNavigator() {
             ...FONTS.navTitle,
           },
           headerLeft: ({ onPress }) => (
-            <MenuComponent navigation={navigation} navigateBack={"Home"} icon={()=><LeftArrowIcon strokeWidth={2} width={32} height={30}></LeftArrowIcon>}></MenuComponent>
+            <MenuComponent navigation={navigation} navigateBack={"Home"} icon={()=><LeftArrowIcon strokeWidth={2} width={Width(8)} height={Width(8)}></LeftArrowIcon>}></MenuComponent>
           ),
           headerRight: () => (
             <CartComponent content={carts.length} navigation={navigation}></CartComponent>
@@ -213,7 +214,7 @@ export default function HomeNavigator() {
             ...FONTS.navTitle,
           },
           headerLeft: ({ onPress }) => (
-            <MenuComponent navigation={navigation} icon={()=><LeftArrowIcon strokeWidth={2} width={32} height={30}></LeftArrowIcon>}></MenuComponent>
+            <MenuComponent navigation={navigation} icon={()=><LeftArrowIcon strokeWidth={2} width={Width(8)} height={Width(8)}></LeftArrowIcon>}></MenuComponent>
           ),
           headerRight: () => (
             <CartComponent content={carts.length} navigation={navigation}></CartComponent>

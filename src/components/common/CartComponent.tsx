@@ -2,6 +2,7 @@ import { Badge, BadgeText } from "@gluestack-ui/themed";
 import { TouchableOpacity } from "react-native";
 import CartIcon from "../icons/CartIcon";
 import { SIZES } from "@/constants";
+import { Width } from "@/constants/theme";
 
 function CartComponent({
   navigation,
@@ -27,7 +28,7 @@ function CartComponent({
           <BadgeText color="#fff">{content}</BadgeText>
         </Badge>
       }
-      <CartIcon width={30} height={30}></CartIcon>
+      <CartIcon width={Width(8)} height={Width(8)}></CartIcon>
     </TouchableOpacity>
   );
 }
