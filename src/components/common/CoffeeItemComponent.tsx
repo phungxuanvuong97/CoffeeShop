@@ -14,9 +14,13 @@ const styles = StyleSheet.create({
   container:{
     display:'flex',
     backgroundColor:'white',
-    height: Height(40),
+    flexDirection:'row',
+    height: Height(45),
     borderRadius:20,
     width: Width(40)
+  },
+  imageContainer:{
+    
   }
 });
 
