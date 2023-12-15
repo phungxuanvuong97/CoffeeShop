@@ -18,6 +18,8 @@ export const cup_icon = require('../../assets/icons/cup_icon.png');
 export const profile_icon = require('../../assets/icons/profile_icon.png');
 export const espresso_icon = require('../../assets/icons/espresso.png');
 export const left_icon = require('../../assets/icons/left_arrow_icon.png');
+export const cart_icon = require('../../assets/icons/cart_icon.png');
+
 
 export default {
   menu,
@@ -39,5 +41,6 @@ export default {
   cup_icon,
   profile_icon,
   espresso_icon,
-  left_icon
+  left_icon,
+  cart_icon
 };

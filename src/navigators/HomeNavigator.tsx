@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, TouchableOpacity } from "react-native";
+import { Image, Text, TouchableOpacity } from "react-native";
 import {
   createStackNavigator,
   StackNavigationProp,
@@ -31,12 +31,22 @@ import ProfileScreen from "@/screens/Profile/ProfileScreen";
 import MenuScreen from "@/screens/Menu/MenuScreen";
 import SplashScreen from "../screens/Splash/SplashScreen";
 import ProductDetailScreen from "@/screens/ProductDetail/ProductDetailScreen";
+import { Badge, BadgeText } from "@gluestack-ui/themed";
+import { useAppData, useAppDataDispatch } from "@/context/AppDataContext";
+import CartComponent from "@/components/common/CartComponent";
+import MenuComponent from "@/components/common/MenuComponent";
+import LoadingSplashScreen from "@/screens/Splash/LoadingSplashScreen";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/reduxs/stores/Store";
+import CartScreen from "@/screens/Cart/CartScreen";
+import LeftArrowIcon from "@/components/icons/LeftArrowIcon";
+import MenuSquareIcon from "@/components/icons/MenuSquareIcon";
+import { Height, Width } from "@/constants/theme";
 
 const Stack = createStackNavigator<HomeStackParamList>();
 const Tab = createBottomTabNavigator<HomeBottmTabParamList>();
 
 function HomeTabs() {
-  const tabBarHeight = SIZES.height / 8;
 
   return (
     <Tab.Navigator
@@ -45,19 +55,18 @@ function HomeTabs() {
         inactiveTintColor: "#D9D9D9",
         activeTintColor: "#B98875",
         //tabBarActiveBackgroundColor: "#B98875",
-        
       }}
       screenOptions={{
         tabBarStyle: [
           {
             backgroundColor: "white",
-            height: tabBarHeight,
+            height: Height(24),
             //borderTopLeftRadius: 30,
             //borderTopRightRadius: 30,
-            padding: tabBarHeight / 8,
+            padding: Width(2),
           },
         ],
-        tabBarActiveTintColor:'#B98875',
+        tabBarActiveTintColor: "#B98875",
       }}
     >
       <Tab.Screen
@@ -65,7 +74,7 @@ function HomeTabs() {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <HomeIcon width={size} height={size} color={color}/>
+            <HomeIcon width={size} height={size} color={color} />
           ),
           headerShown: false,
         }}
@@ -95,14 +104,18 @@ function HomeTabs() {
         component={OrderScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <CoffeeCupIcon width={size} height={size} color={color}></CoffeeCupIcon>
+            <CoffeeCupIcon
+              width={size}
+              height={size}
+              color={color}
+            ></CoffeeCupIcon>
           ),
           headerShown: false,
-          tabBarBadge:'1',
-          tabBarBadgeStyle:{
-            backgroundColor:'#B98875',
-            color:'white'
-          }
+          tabBarBadge: "1",
+          tabBarBadgeStyle: {
+            backgroundColor: "#B98875",
+            color: "white",
+          },
         }}
       />
       <Tab.Screen
@@ -115,48 +128,48 @@ function HomeTabs() {
           headerShown: false,
         }}
       />
-     
     </Tab.Navigator>
   );
 }
 
 export default function HomeNavigator() {
   const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
+
+  const {carts}  = useSelector((state: RootState) => state.carts);
+
   return (
     <Stack.Navigator initialRouteName="SplashScreen">
       <Stack.Screen
         name="Home"
         component={HomeTabs}
         options={{
-          title: " ",
+          title: "",
           headerStyle: {
             backgroundColor: "#FAF4EE",
+            height: Height(28)
           },
           headerTintColor: COLORS.lightGray,
           headerTitleStyle: {
             ...FONTS.navTitle,
           },
           headerLeft: ({ onPress }) => (
-            <TouchableOpacity
-              style={{ marginLeft: SIZES.padding }}
-              onPress={() => navigation.navigate("MenuScreen")}
-            >
-              <MenuIcon width={28} height={28}></MenuIcon>
-            </TouchableOpacity>
+            <MenuComponent navigation={navigation} navigateBack={"MenuScreen"} icon={()=><MenuSquareIcon width={Width(8)} height={Width(8)} color={COLORS.mainColor}></MenuSquareIcon>}></MenuComponent>
           ),
           headerRight: () => (
-            <TouchableOpacity
-              style={{ marginRight: SIZES.padding }}
-              onPress={() => console.log("Pressed")}
-            >
-              <CartIcon width={28} height={28}></CartIcon>
-            </TouchableOpacity>
+            <CartComponent content={carts.length} navigation={navigation}></CartComponent>
           ),
         }}
       />
       <Stack.Screen
         name="SplashScreen"
         component={SplashScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="LoadingSplashScreen"
+        component={LoadingSplashScreen}
         options={{
           headerShown: false,
         }}
@@ -181,20 +194,30 @@ export default function HomeNavigator() {
             ...FONTS.navTitle,
           },
           headerLeft: ({ onPress }) => (
-            <TouchableOpacity
-              style={{ marginLeft: SIZES.padding }}
-              onPress={() => navigation.navigate("Home")}
-            >
-              <MenuIcon width={25} height={25}></MenuIcon>
-            </TouchableOpacity>
+            <MenuComponent navigation={navigation} navigateBack={"Home"} icon={()=><LeftArrowIcon strokeWidth={2} width={Width(8)} height={Width(8)}></LeftArrowIcon>}></MenuComponent>
           ),
           headerRight: () => (
-            <TouchableOpacity
-              style={{ marginRight: SIZES.padding }}
-              onPress={() => console.log("Pressed")}
-            >
-              <CartIcon width={25} height={25}></CartIcon>
-            </TouchableOpacity>
+            <CartComponent content={carts.length} navigation={navigation}></CartComponent>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="CartScreen"
+        component={CartScreen}
+        options={{
+          title: " ",
+          headerStyle: {
+            backgroundColor: "#FAF4EE",
+          },
+          headerTintColor: COLORS.lightGray,
+          headerTitleStyle: {
+            ...FONTS.navTitle,
+          },
+          headerLeft: ({ onPress }) => (
+            <MenuComponent navigation={navigation} icon={()=><LeftArrowIcon strokeWidth={2} width={Width(8)} height={Width(8)}></LeftArrowIcon>}></MenuComponent>
+          ),
+          headerRight: () => (
+            <CartComponent content={carts.length} navigation={navigation}></CartComponent>
           ),
         }}
       />

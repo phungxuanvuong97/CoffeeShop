@@ -1,7 +1,18 @@
+import CartComponent from "@/components/common/CartComponent";
 import CartIcon from "@/components/icons/CartIcon";
 import LargeCupIcon from "@/components/icons/LargeCupIcon";
 import LargeSugarCupIcon from "@/components/icons/LargeSugarCupIcon";
+import LeftArrowIcon from "@/components/icons/LeftArrowIcon";
 import { SIZES, icons, images } from "@/constants";
+import { Height, Width } from "@/constants/theme";
+import { useAppData, useAppDataDispatch } from "@/context/AppDataContext";
+import { AddProductToCart } from "@/reduxs/actions/CartActions";
+import { addCart } from "@/reduxs/reducers/CartsReducer";
+import { RootState } from "@/reduxs/stores/Store";
+import { AddNewProduct } from "@/services/carts/cartService";
+import { CartModel } from "@/types/carts/Cart";
+import { ProductModel } from "@/types/products/ProductItem";
+import { Badge, BadgeText } from "@gluestack-ui/themed";
 import React, { useState } from "react";
 
 import {
@@ -15,46 +26,16 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SceneMap, TabView } from "react-native-tab-view";
-
-const FirstRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#ff4081" }}>
-    <Text>aasaaa</Text>
-  </View>
-);
-
-const SecondRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#ff4081" }}>
-    <Text>aasaaa</Text>
-  </View>
-);
-
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
-});
-
-function ProductImageList() {
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: "first", title: "First" },
-    { key: "second", title: "Second" },
-  ]);
-
-  return (
-    <TabView
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={{ width: SIZES.width, height: SIZES.height }}
-    />
-  );
-}
+import { useDispatch, useSelector } from "react-redux";
 
 function ProductDetailScreen({ navigation, route }: any) {
   const { id, title } = route.params;
-  const [quanlity, setQuanlity] = useState(0);
+  const [quanlity, setQuanlity] = useState(1);
   const [sugar, setSugar] = useState(1);
   const [size, setSize] = useState(1);
+
+  const dispatch = useDispatch();
+  const { carts } = useSelector((state: RootState) => state.carts);
 
   function addQuanlity() {
     setQuanlity(quanlity + 1);
@@ -99,6 +80,20 @@ function ProductDetailScreen({ navigation, route }: any) {
     }
   }
 
+  function onPressAddProductToCart() {
+    const responseModel: CartModel = {
+      id: 1,
+      product: {
+        id: 1,
+        name: title,
+        size: 1,
+        sugar: 1,
+      },
+      quanlity: quanlity,
+    };
+    dispatch(addCart(responseModel));
+  }
+
   function renderSizeSelection(quanlity: any) {
     let startingSize = 32;
     let steping = 8;
@@ -128,7 +123,10 @@ function ProductDetailScreen({ navigation, route }: any) {
               setSize(i);
             }}
           >
-            <LargeCupIcon width={32} height={startingSize}></LargeCupIcon>
+            <LargeCupIcon
+              width={Width(15)}
+              height={startingSize}
+            ></LargeCupIcon>
             <Text style={styles.productSizeIconItemText}>{getSizeText(i)}</Text>
           </TouchableOpacity>
         );
@@ -140,7 +138,10 @@ function ProductDetailScreen({ navigation, route }: any) {
               setSize(i);
             }}
           >
-            <LargeCupIcon width={32} height={startingSize}></LargeCupIcon>
+            <LargeCupIcon
+              width={Width(15)}
+              height={startingSize}
+            ></LargeCupIcon>
             <Text style={styles.productSizeIconItemText}>{getSizeText(i)}</Text>
           </TouchableOpacity>
         );
@@ -182,7 +183,7 @@ function ProductDetailScreen({ navigation, route }: any) {
             }}
           >
             <LargeSugarCupIcon
-              width={32}
+              width={Width(15)}
               height={startingSize}
             ></LargeSugarCupIcon>
             <Text style={styles.productSizeIconItemText}>
@@ -199,7 +200,7 @@ function ProductDetailScreen({ navigation, route }: any) {
             }}
           >
             <LargeSugarCupIcon
-              width={32}
+              width={Width(15)}
               height={startingSize}
             ></LargeSugarCupIcon>
             <Text style={styles.productSizeIconItemText}>
@@ -225,22 +226,21 @@ function ProductDetailScreen({ navigation, route }: any) {
             }}
             style={styles.productHeaderTitleIconBack}
           >
-            <Image
-              source={icons.left_icon}
-              style={{ width: 28, height: 28 }}
-            ></Image>
+            <LeftArrowIcon
+              strokeWidth={2}
+              width={Width(8)}
+              height={Width(8)}
+            ></LeftArrowIcon>
           </TouchableOpacity>
           <View style={styles.productHeaderTitleTextContainer}>
             <Text style={styles.productHeaderTitleTextContainerText}>
               {title}
             </Text>
           </View>
-          <TouchableOpacity
-            style={{ marginRight: SIZES.padding }}
-            onPress={() => console.log("Pressed")}
-          >
-            <CartIcon width={28} height={28}></CartIcon>
-          </TouchableOpacity>
+          <CartComponent
+            content={carts.length}
+            navigation={navigation}
+          ></CartComponent>
         </View>
       </View>
       <ScrollView style={styles.productDetails}>
@@ -291,15 +291,18 @@ function ProductDetailScreen({ navigation, route }: any) {
           <Text style={styles.productIngradientText}>Sugar</Text>
           {renderSugarSelection(sugar)}
         </View>
-        <TouchableOpacity style={styles.addToCartButtonContainer}>
+        <TouchableOpacity
+          style={styles.addToCartButtonContainer}
+          onPress={() => {
+            onPressAddProductToCart();
+          }}
+        >
           <Text style={styles.addToCartButtonText}>Add to card</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
   );
 }
-
-const tabBarHeight = SIZES.height / 16;
 
 const styles = StyleSheet.create({
   screenContainer: {
@@ -308,7 +311,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FAF4EE",
     height: "100%",
     width: "100%",
-    paddingTop: tabBarHeight,
+    paddingTop: Height(14),
   },
   productHeader: {
     display: "flex",
@@ -320,7 +323,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   productHeaderTitleIconBack: {
-    paddingLeft: SIZES.width / 30,
+    paddingLeft: Width(6),
     flexGrow: 1,
   },
   productHeaderTitleTextContainer: {
@@ -328,26 +331,23 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    right: SIZES.width / 30,
   },
   productHeaderTitleTextContainerText: {
     color: "#000",
-    fontSize: 22,
+    fontSize: Width(7),
     fontstyle: "normal",
     fontweight: "500",
     lineheight: 32,
     letterSpacing: -0.32,
   },
   productHeaderImageContainer: {
-    height: SIZES.height / 3,
-    width: "100%",
-    padding: 10,
+    height: Height(50),
+    //padding: 10,
   },
   productHeaderImageContainerImagebackground: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    margin: 10,
   },
   productHeaderImageContainerImage: {
     width: SIZES.width / 2,
@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
   productTitleText: {
     color: "#000",
     fontFamily: "Inter",
-    fontSize: 22,
+    fontSize: Width(6),
     fontStyle: "normal",
     fontWeight: "500",
     lineHeight: 32,
@@ -408,7 +408,7 @@ const styles = StyleSheet.create({
   productQuanlityText: {
     color: "#000",
     fontFamily: "Inter",
-    fontSize: 22,
+    fontSize: Width(6),
     fontStyle: "normal",
     fontWeight: "500",
     lineHeight: 32,
@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
 
   productQuanlityTextContainer: {
     fontFamily: "Inter",
-    fontSize: 22,
+    fontSize: Width(6),
     fontStyle: "normal",
     fontWeight: "500",
     lineHeight: 32,

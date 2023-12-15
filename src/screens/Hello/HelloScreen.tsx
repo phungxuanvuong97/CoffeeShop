@@ -1,5 +1,6 @@
 import CoffeeImageIcon from "@/components/icons/CoffeImageIcon";
 import { SIZES, icons, images } from "@/constants";
+import { Width } from "@/constants/theme";
 import { View, Image, StyleSheet, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
 
   mainText: {
     color: "#000000",
-    fontSize: 30,
+    fontSize: Width(10),
     textAlign: "center",
     shadowColor: "#000",
     shadowOffset: {

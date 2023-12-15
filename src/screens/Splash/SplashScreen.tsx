@@ -7,7 +7,7 @@ function SplashScreen({ navigation, backScreen = "Home"}: any) {
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate(backScreen);
-    }, 3000);
+    }, 1000);
   }, []);
 
   const imageWidth = SIZES.width / 2;

@@ -1,5 +1,6 @@
 import LatteIcon from "@/components/icons/LatteIcon";
 import { SIZES, icons } from "@/constants";
+import { Height, Width } from "@/constants/theme";
 import { HomeStackParamList } from "@/types/NavigationTypes";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -25,7 +26,7 @@ function MenuItem(item: any, index: any, navigation: any) {
       }}
     >
       <View style={styles.menuItem}>
-        <LatteIcon width={32} height={32} style={styles.menuItemIcon}></LatteIcon>
+        <LatteIcon width={Width(8)} height={Width(8)} style={styles.menuItemIcon}></LatteIcon>
         <View style={styles.menuItemTextContainer}>
           <Text style={styles.menuItemText}>{item.name}</Text>
         </View>
@@ -33,8 +34,8 @@ function MenuItem(item: any, index: any, navigation: any) {
           source={icons.left_icon}
           resizeMode="contain"
           style={{
-            width: 22,
-            height: 22,
+            width: Width(8),
+            height: Width(8),
             flexGrow: 1,
           }}
         />
@@ -46,7 +47,7 @@ function MenuItem(item: any, index: any, navigation: any) {
 function getIconComponent(icon: any){
   switch(icon){
     case 'latte':{
-      return <LatteIcon width={32} height={32} style={styles.menuItemIcon}></LatteIcon>
+      return <LatteIcon width={Width(12)} height={Width(12)} style={styles.menuItemIcon}></LatteIcon>
     }
   }
 }
@@ -83,12 +84,12 @@ function MenuScreen() {
   return (
     <View style={styles.screenContainer}>
       <Text style={styles.mainText}>
-        <Text style={{ fontSize: 30 }}>It’s Great</Text>
-        <Text style={{ fontSize: 30, fontWeight: 600, color: "#B98875" }}>
+        <Text style={{ fontSize: Width(8) }}>It’s Great</Text>
+        <Text style={{ fontSize: Width(8), fontWeight: 600, color: "#B98875" }}>
           {" "}
           Day For {"\n"}
         </Text>
-        <Text style={{ fontSize: 30, fontWeight: 600, color: "#B98875" }}>
+        <Text style={{ fontSize: Width(8), fontWeight: 600, color: "#B98875" }}>
           Coffee
         </Text>
       </Text>
@@ -97,7 +98,6 @@ function MenuScreen() {
   );
 }
 
-const gap = SIZES.width / 12;
 
 const styles = StyleSheet.create({
   screenContainer: {
@@ -115,7 +115,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: 'space-between',
-    margin: 15,
+    paddingLeft: Width(6),
+    paddingRight: Width(6),
+    paddingBottom: Height(2),
+    paddingTop: Height(2)
   },
 
   menuItemIcon:{
@@ -125,7 +128,7 @@ const styles = StyleSheet.create({
   menuItemTextContainer: {
     flexGrow:8,
     alignItems:'flex-start',
-    marginLeft:SIZES.width / 8
+    paddingLeft:Width(10)
   },
 
   menuItemLeftIcon:{
@@ -135,8 +138,8 @@ const styles = StyleSheet.create({
   menuItemText: {
     color: "#000",
     fontWeight: '400',
-    fontHeiht: 32,
-    fontSize: 20,
+    fontHeiht: Height(10),
+    fontSize: Width(6),
   },
 
   listMenuItem: {
